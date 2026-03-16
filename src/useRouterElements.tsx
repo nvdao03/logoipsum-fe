@@ -3,6 +3,7 @@ import { PATH } from './constants/path'
 import AuthLayout from './layouts/AuthLayout'
 import SignUp from './pages/auth/SignUp'
 import SignIn from './pages/auth/SignIn'
+import ForgotPassword from './pages/auth/ForgotPassword'
 
 export default function useRouterElements() {
   const routers = useRoutes([
@@ -19,6 +20,14 @@ export default function useRouterElements() {
       element: (
         <AuthLayout>
           <SignIn />
+        </AuthLayout>
+      )
+    },
+    {
+      path: PATH.FORGOT_PASSWORD,
+      element: (
+        <AuthLayout>
+          <ForgotPassword />
         </AuthLayout>
       )
     }
