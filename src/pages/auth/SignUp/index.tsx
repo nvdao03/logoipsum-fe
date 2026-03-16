@@ -96,46 +96,6 @@ export default function SignUp() {
               </button>
             </div>
           </form>
-          <div className='mt-[14px] sm:mt-6 text-[#A4A4A4] text-[14px] flex items-center'>
-            <span className='bg-[#DFDFDF] w-full h-[1px]'></span>
-            <span className='text-center block px-4'>Hoặc</span>
-            <span className='bg-[#DFDFDF] w-full h-[1px]'></span>
-          </div>
-          <div className='flex mt-[14px] sm:mt-6'>
-            <button className='h-10 sm:h-[48px] flex text-[14px] sm:text-[16px] items-center justify-center gap-2 text-center bg-[#EFEFEF] px-4 py-4 text-[#4A4A4A] rounded-lg w-full'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                <path
-                  opacity='0.987'
-                  fill-rule='evenodd'
-                  clip-rule='evenodd'
-                  d='M10.8135 1.59112C11.901 1.46962 12.5445 1.46962 13.713 1.59112C15.7814 1.89727 17.6988 2.85335 19.188 4.32113C18.1817 5.27233 17.1886 6.23742 16.209 7.21612C14.333 5.62612 12.239 5.25912 9.927 6.11513C8.231 6.89512 7.05 8.15913 6.384 9.90713C5.29566 9.09687 4.2215 8.26774 3.162 7.42013C3.08837 7.38137 3.00427 7.36718 2.922 7.37962C4.605 4.13462 7.235 2.20462 10.812 1.58962'
-                  fill='#FB3748'
-                />
-                <path
-                  opacity='0.997'
-                  fill-rule='evenodd'
-                  clip-rule='evenodd'
-                  d='M2.91901 7.37978C3.00401 7.36678 3.08451 7.38028 3.16051 7.42028C4.22001 8.2679 5.29417 9.09703 6.38251 9.90728C6.21125 10.5884 6.10329 11.2838 6.06001 11.9848C6.09701 12.6628 6.20451 13.3283 6.38251 13.9813L3.00001 16.6738C1.52701 13.5958 1.50001 10.4978 2.91901 7.37978Z'
-                  fill='#FFC107'
-                />
-                <path
-                  opacity='0.999'
-                  fill-rule='evenodd'
-                  clip-rule='evenodd'
-                  d='M19.0275 19.9341C17.9743 19.0053 16.8717 18.134 15.7245 17.3241C16.8745 16.5121 17.5725 15.3981 17.8185 13.9821H12.183V10.0686C15.433 10.0416 18.6815 10.0691 21.9285 10.1511C22.5445 13.4961 21.833 16.5121 19.794 19.1991C19.5515 19.4569 19.2947 19.7022 19.0275 19.9341Z'
-                  fill='#448AFF'
-                />
-                <path
-                  opacity='0.993'
-                  fill-rule='evenodd'
-                  clip-rule='evenodd'
-                  d='M6.3825 13.9824C7.6125 17.0394 9.8675 18.4664 13.1475 18.2634C14.0682 18.1568 14.951 17.8352 15.7245 17.3244C16.8725 18.1364 17.9735 19.0064 19.0275 19.9344C17.3575 21.4351 15.2282 22.3255 12.987 22.4604C12.4778 22.5011 11.9662 22.5011 11.457 22.4604C7.639 22.0104 4.82 20.0814 3 16.6734L6.3825 13.9824Z'
-                  fill='#43A047'
-                />
-              </svg>
-              Đăng ký bằng Google
-            </button>
-          </div>
           {/* Sing In */}
           <div className='flex justify-center items-center mt-6 text-[14px] sm:text-[16px]'>
             <span>
@@ -149,7 +109,7 @@ export default function SignUp() {
         {/* Button close */}
         <Link
           to={PATH.HOME}
-          className='flex justify-center items-center absolute -top-[12%] right-0 sm:-top-[10%] w-[45px] h-[45px] sm:w-[40px] sm:h-[40px] rounded-[50%] bg-white'
+          className='flex justify-center items-center absolute -top-[15%] right-0 sm:-top-[13%] w-[45px] h-[45px] sm:w-[40px] sm:h-[40px] rounded-[50%] bg-white'
         >
           <svg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 9 9' fill='none'>
             <path
