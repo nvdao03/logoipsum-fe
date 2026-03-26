@@ -1,8 +1,37 @@
 import { Link, useLocation } from 'react-router-dom'
 import { PATH } from '../../../constants/path'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { signUpValidation, TypeSchameSignUp } from '../../../validations/auth'
+import { useState } from 'react'
 
 export default function SignUp() {
   const pathName = useLocation().pathname
+  const [typePassword, setTypePassword] = useState<string>('password')
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch
+  } = useForm({
+    resolver: yupResolver(signUpValidation)
+  })
+
+  const isPasswordEmpty = watch('password')
+  const isEmailEmpty = watch('email')
+
+  // --- Change type password --- //
+  const handleChangeTypePassword = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    event.preventDefault()
+    setTypePassword(typePassword === 'password' ? 'text' : 'password')
+  }
+
+  // --- Handle Submit Form --- //
+  const handleSubmitForm = handleSubmit((data: TypeSchameSignUp) => {
+    console.log(data)
+  })
 
   return (
     <div className='w-full h-screen bg-[#D0CECE] flex justify-center items-center'>
@@ -25,7 +54,7 @@ export default function SignUp() {
         </div>
         {/* Form */}
         <div className='py-6 px-[18px] sm:p-6'>
-          <form className='flex flex-col gap-5'>
+          <form className='flex flex-col gap-5' onSubmit={handleSubmitForm}>
             <div className='flex flex-col gap-2'>
               <label htmlFor='' className='flex items-center gap-2 text-[14px] sm:text-[16px]'>
                 Email
@@ -38,9 +67,28 @@ export default function SignUp() {
               </label>
               <input
                 type='text'
-                className='w-full rounded-lg py-3.5 px-3 bg-[#F9F9F9] placeholder:text-[14px] border-none outline-none text-[14px] sm:text[16px]'
+                className='w-full rounded-lg py-3.5 px-3 bg-[#F9F9F9] placeholder:text-[14px] border border-solid outline-none text-[14px] sm:text[16px] border-[#DFDFDF] focus:ring-1 focus:ring-blue-500'
                 placeholder='Nhập địa chỉ email'
+                {...register('email')}
               />
+              {errors.email && (
+                <span className='text-[#FF3B30] text-[12px] flex items-center gap-2'>
+                  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <g clip-path='url(#clip0_205_1133)'>
+                      <path
+                        d='M16 8C16 9.58225 15.5308 11.129 14.6518 12.4446C13.7727 13.7602 12.5233 14.7855 11.0615 15.391C9.59966 15.9965 7.99113 16.155 6.43928 15.8463C4.88743 15.5376 3.46197 14.7757 2.34315 13.6569C1.22433 12.538 0.462403 11.1126 0.153721 9.56072C-0.15496 8.00887 0.00346629 6.40034 0.608967 4.93853C1.21447 3.47672 2.23985 2.22729 3.55544 1.34824C4.87104 0.469192 6.41775 0 8 0C10.121 0.00229405 12.1545 0.845886 13.6543 2.34568C15.1541 3.84547 15.9977 5.87897 16 8ZM9.33334 8C9.33334 7.64638 9.19286 7.30724 8.94281 7.05719C8.69276 6.80714 8.35363 6.66667 8 6.66667H6.66667V8H8V12.6667H9.33334V8ZM8 3.33333C7.80222 3.33333 7.60888 3.39198 7.44443 3.50186C7.27998 3.61175 7.15181 3.76792 7.07612 3.95065C7.00044 4.13338 6.98063 4.33444 7.01922 4.52842C7.0578 4.72241 7.15304 4.90059 7.2929 5.04044C7.43275 5.18029 7.61093 5.27553 7.80491 5.31412C7.99889 5.3527 8.19996 5.3329 8.38269 5.25721C8.56541 5.18153 8.72159 5.05335 8.83147 4.8889C8.94136 4.72445 9 4.53112 9 4.33333C9 4.06812 8.89465 3.81376 8.70711 3.62623C8.51957 3.43869 8.26522 3.33333 8 3.33333Z'
+                        fill='#FB3748'
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id='clip0_205_1133'>
+                        <rect width='16' height='16' fill='white' />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  {errors.email.message}
+                </span>
+              )}
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor='' className='flex items-center gap-2 text-[14px] sm:text-[16px]'>
@@ -52,7 +100,7 @@ export default function SignUp() {
                   />
                 </svg>
               </label>
-              <div className='flex items-center bg-[#F9F9F9] rounded-lg'>
+              <div className='flex items-center bg-[#F9F9F9] rounded-lg border border-solid border-[#DFDFDF] focus-within:border-blue-500 focus:ring-2 focus:ring-blue-500'>
                 <svg
                   className='ml-3'
                   xmlns='http://www.w3.org/2000/svg'
@@ -67,31 +115,55 @@ export default function SignUp() {
                   />
                 </svg>
                 <input
-                  type='password'
-                  className='w-full py-3.5 px-3 bg-[#F9F9F9]  placeholder:text-[14px] border-none outline-none text-[14px] sm:text[16px]'
+                  type={typePassword}
+                  className='w-full py-3.5 px-3 bg-[#F9F9F9]  placeholder:text-[14px] outline-none text-[14px] sm:text[16px] '
                   placeholder='Nhập mật khẩu'
+                  {...register('password')}
                 />
-                <svg
-                  className='mr-3'
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='20'
-                  viewBox='0 0 20 20'
-                  fill='none'
-                >
-                  <path
-                    d='M19.8507 9.3175C19.1191 7.7175 16.2499 2.5 9.99989 2.5C3.74989 2.5 0.880726 7.7175 0.149059 9.3175C0.0508413 9.53192 0 9.76499 0 10.0008C0 10.2367 0.0508413 10.4697 0.149059 10.6842C0.880726 12.2825 3.74989 17.5 9.99989 17.5C16.2499 17.5 19.1191 12.2825 19.8507 10.6825C19.9487 10.4683 19.9995 10.2355 19.9995 10C19.9995 9.76446 19.9487 9.53168 19.8507 9.3175ZM9.99989 15.8333C4.74406 15.8333 2.29156 11.3617 1.66656 10.0092C2.29156 8.63833 4.74406 4.16667 9.99989 4.16667C15.2432 4.16667 17.6966 8.61917 18.3332 10C17.6966 11.3808 15.2432 15.8333 9.99989 15.8333Z'
-                    fill='#A4A4A4'
-                  />
-                  <path
-                    d='M9.99992 5.8335C9.17583 5.8335 8.37025 6.07787 7.68504 6.53571C6.99984 6.99355 6.46579 7.64429 6.15042 8.40565C5.83506 9.16701 5.75254 10.0048 5.91332 10.813C6.07409 11.6213 6.47092 12.3637 7.05364 12.9464C7.63636 13.5292 8.37879 13.926 9.18704 14.0868C9.9953 14.2475 10.8331 14.165 11.5944 13.8497C12.3558 13.5343 13.0065 13.0002 13.4644 12.315C13.9222 11.6298 14.1666 10.8243 14.1666 10.0002C14.1653 8.8955 13.7259 7.83646 12.9447 7.05535C12.1636 6.27423 11.1046 5.83482 9.99992 5.8335ZM9.99992 12.5002C9.50547 12.5002 9.02212 12.3535 8.61099 12.0788C8.19987 11.8041 7.87944 11.4137 7.69022 10.9569C7.501 10.5001 7.45149 9.99739 7.54796 9.51244C7.64442 9.02748 7.88252 8.58203 8.23215 8.2324C8.58178 7.88276 9.02724 7.64466 9.51219 7.5482C9.99715 7.45174 10.4998 7.50124 10.9566 7.69046C11.4134 7.87968 11.8039 8.20011 12.0786 8.61124C12.3533 9.02236 12.4999 9.50571 12.4999 10.0002C12.4999 10.6632 12.2365 11.2991 11.7677 11.7679C11.2988 12.2368 10.663 12.5002 9.99992 12.5002Z'
-                    fill='#A4A4A4'
-                  />
-                </svg>
+                <button className='py-3.5 border-none outline-none' onClick={handleChangeTypePassword}>
+                  <svg
+                    className='mr-3'
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='20'
+                    height='20'
+                    viewBox='0 0 20 20'
+                    fill='none'
+                  >
+                    <path
+                      d='M19.8507 9.3175C19.1191 7.7175 16.2499 2.5 9.99989 2.5C3.74989 2.5 0.880726 7.7175 0.149059 9.3175C0.0508413 9.53192 0 9.76499 0 10.0008C0 10.2367 0.0508413 10.4697 0.149059 10.6842C0.880726 12.2825 3.74989 17.5 9.99989 17.5C16.2499 17.5 19.1191 12.2825 19.8507 10.6825C19.9487 10.4683 19.9995 10.2355 19.9995 10C19.9995 9.76446 19.9487 9.53168 19.8507 9.3175ZM9.99989 15.8333C4.74406 15.8333 2.29156 11.3617 1.66656 10.0092C2.29156 8.63833 4.74406 4.16667 9.99989 4.16667C15.2432 4.16667 17.6966 8.61917 18.3332 10C17.6966 11.3808 15.2432 15.8333 9.99989 15.8333Z'
+                      fill='#A4A4A4'
+                    />
+                    <path
+                      d='M9.99992 5.8335C9.17583 5.8335 8.37025 6.07787 7.68504 6.53571C6.99984 6.99355 6.46579 7.64429 6.15042 8.40565C5.83506 9.16701 5.75254 10.0048 5.91332 10.813C6.07409 11.6213 6.47092 12.3637 7.05364 12.9464C7.63636 13.5292 8.37879 13.926 9.18704 14.0868C9.9953 14.2475 10.8331 14.165 11.5944 13.8497C12.3558 13.5343 13.0065 13.0002 13.4644 12.315C13.9222 11.6298 14.1666 10.8243 14.1666 10.0002C14.1653 8.8955 13.7259 7.83646 12.9447 7.05535C12.1636 6.27423 11.1046 5.83482 9.99992 5.8335ZM9.99992 12.5002C9.50547 12.5002 9.02212 12.3535 8.61099 12.0788C8.19987 11.8041 7.87944 11.4137 7.69022 10.9569C7.501 10.5001 7.45149 9.99739 7.54796 9.51244C7.64442 9.02748 7.88252 8.58203 8.23215 8.2324C8.58178 7.88276 9.02724 7.64466 9.51219 7.5482C9.99715 7.45174 10.4998 7.50124 10.9566 7.69046C11.4134 7.87968 11.8039 8.20011 12.0786 8.61124C12.3533 9.02236 12.4999 9.50571 12.4999 10.0002C12.4999 10.6632 12.2365 11.2991 11.7677 11.7679C11.2988 12.2368 10.663 12.5002 9.99992 12.5002Z'
+                      fill='#A4A4A4'
+                    />
+                  </svg>
+                </button>
               </div>
+              {errors.password && (
+                <span className='text-[#FF3B30] text-[12px] flex items-center gap-2'>
+                  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <g clip-path='url(#clip0_205_1133)'>
+                      <path
+                        d='M16 8C16 9.58225 15.5308 11.129 14.6518 12.4446C13.7727 13.7602 12.5233 14.7855 11.0615 15.391C9.59966 15.9965 7.99113 16.155 6.43928 15.8463C4.88743 15.5376 3.46197 14.7757 2.34315 13.6569C1.22433 12.538 0.462403 11.1126 0.153721 9.56072C-0.15496 8.00887 0.00346629 6.40034 0.608967 4.93853C1.21447 3.47672 2.23985 2.22729 3.55544 1.34824C4.87104 0.469192 6.41775 0 8 0C10.121 0.00229405 12.1545 0.845886 13.6543 2.34568C15.1541 3.84547 15.9977 5.87897 16 8ZM9.33334 8C9.33334 7.64638 9.19286 7.30724 8.94281 7.05719C8.69276 6.80714 8.35363 6.66667 8 6.66667H6.66667V8H8V12.6667H9.33334V8ZM8 3.33333C7.80222 3.33333 7.60888 3.39198 7.44443 3.50186C7.27998 3.61175 7.15181 3.76792 7.07612 3.95065C7.00044 4.13338 6.98063 4.33444 7.01922 4.52842C7.0578 4.72241 7.15304 4.90059 7.2929 5.04044C7.43275 5.18029 7.61093 5.27553 7.80491 5.31412C7.99889 5.3527 8.19996 5.3329 8.38269 5.25721C8.56541 5.18153 8.72159 5.05335 8.83147 4.8889C8.94136 4.72445 9 4.53112 9 4.33333C9 4.06812 8.89465 3.81376 8.70711 3.62623C8.51957 3.43869 8.26522 3.33333 8 3.33333Z'
+                        fill='#FB3748'
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id='clip0_205_1133'>
+                        <rect width='16' height='16' fill='white' />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  {errors.password.message}
+                </span>
+              )}
             </div>
             <div className='flex justify-center items-center'>
-              <button className='h-10 sm:h-[48px] flex justify-center items-center text-center text-[14px] sm:text-[16px] text-white px-4 py-4 bg-[#FFD388] rounded-lg w-full'>
+              <button
+                disabled={!isEmailEmpty || !isPasswordEmpty}
+                className={`h-10 sm:h-[48px] flex justify-center items-center text-center text-[14px] sm:text-[16px] text-white px-4 py-4 rounded-lg w-full ${!isEmailEmpty || !isPasswordEmpty || !isPasswordEmpty || isPasswordEmpty.length === 0 ? 'bg-[#FFD388] cursor-not-allowed' : 'bg-[#FF9616]'}`}
+              >
                 Đăng ký
               </button>
             </div>

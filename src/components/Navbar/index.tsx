@@ -140,16 +140,18 @@ export default function Navbar() {
           )}
           {/* Block right desktop */}
           <div className='hidden sm:flex gap-3'>
-            <button
+            <Link
+              to={PATH.SIGNUP}
               className={`py-3 px-4 border-[2px] border-solid rounded-[8px] font-semibold ${isScrolled ? 'border-[#FF9616] text-[#FF9616]' : 'border-white text-white'}`}
             >
               Đăng ký
-            </button>
-            <button
-              className={`py-3 px-4 border border-solid rounded-[8px] font-semibold ${isScrolled ? 'text-white bg-[#FF9616]' : 'text-[#FF9616] bg-white'}`}
+            </Link>
+            <Link
+              to={PATH.SIGNIN}
+              className={`py-3 px-4 border border-solid rounded-[8px] font-semibold ${isScrolled ? 'text-white bg-[#FF9616]' : 'text-[#FF9616] bg-white border-white'}`}
             >
               Đăng nhập
-            </button>
+            </Link>
           </div>
           {/* Block right mobile */}
           <button
